@@ -1,0 +1,15 @@
+{
+  "V_shell": 3005679391.450835,
+  "N_expected_shell": 15.401157627544396,
+  "N_expected_arms": 2.16483081238919,
+  "frac_points_in_arm": 0.202768,
+  "params": {
+    "R0_pc": 8122.0,
+    "Rd": 2600.0,
+    "hz": 300.0,
+    "arm_half_width": 300.0,
+    "N_total": 30000.0,
+    "N_mc": 1000000,
+    "use_reid_csv": true
+  }
+}

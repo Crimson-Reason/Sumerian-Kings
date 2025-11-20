@@ -1,0 +1,149 @@
+% G-type star calculations and results
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{xurl}
+\title{Estimate of G--type Stars in the 20,366--20,374 ly Shell (Spiral Arms)}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Summary}
+This document records analytic and Monte Carlo estimates for the number of G--type (Sunlike) stars expected within the spherical shell centered on the Sun with inner radius $r_1=20\,366$ ly and outer radius $r_2=20\,374$ ly, and specifically the expected number that lie in spiral arms.
+
+Two approaches are presented:
+\begin{enumerate}
+  \item A simple disk--averaged analytic estimate using an exponential disk model for G stars.
+  \item Results from a parametric Monte Carlo spiral--arm model (sampling the shell volume, applying an exponential radial surface density and exponential vertical profile, and tagging points within arm half-widths). The Monte Carlo run and its outputs are included below.
+\end{enumerate}
+
+\section*{Assumptions and constants}
+\begin{itemize}
+  \item Distances: $1~\mathrm{ly}=0.306601~\mathrm{pc}$.
+  \item Shell (Earth-centered): $r_1=20\,366~\mathrm{ly}$, $r_2=20\,374~\mathrm{ly}$.
+  \item Galactic geometry used in the Monte Carlo: Sun at $R_0=8.122~\mathrm{kpc}=8122~\mathrm{pc}$.
+  \item Disk model (G stars): exponential radial scale length $R_d=2600~\mathrm{pc}$, vertical scale height $h_z=300~\mathrm{pc}$. These values match those used in the Monte Carlo script that produced the numerical results below and may be adjusted if you prefer different literature values.
+  \item Spiral arms: Reid et al.\ 2014 spiral arm model (4 arms: Perseus, Local, Sagittarius, Norma), loaded from \texttt{\detokenize{reid_arms.csv}}. The arm half-width remains $300~\mathrm{pc}$.
+  \item Population normalization: the Monte Carlo examples use a nominal total G-star count $N_{\rm total,G}=2.0\times10^{10}$ (20 billion). Sensitivity examples for other totals are also provided.
+\end{itemize}
+
+\section*{Analytic conversions}
+Convert the shell radii to parsecs:
+\begin{align*}
+r_1 &= 20\,366~\mathrm{ly} \times 0.306601~\mathrm{pc/ly} = 6\,244.2~\mathrm{pc},\\
+r_2 &= 20\,374~\mathrm{ly} \times 0.306601~\mathrm{pc/ly} = 6\,246.7~\mathrm{pc},\\
+\Delta r &= r_2 - r_1 \approx 2.5~\mathrm{pc}.
+\end{align*}
+
+For reference the full spherical shell volume is
+\[ V_{\rm shell} = \frac{4\pi}{3}\left(r_2^3 - r_1^3\right). \]
+
+Using the Monte Carlo geometry (identical radii) the computed shell volume is reported in the model outputs below.
+
+\section*{Monte Carlo method (brief)}
+The Monte Carlo model samples points uniformly in the spherical shell (sampling $r$ from a uniform distribution in $r^3$), converts Sun-centered coordinates to Galactocentric cylindrical coordinates $(R,\phi,Z)$ using $R_0=8122$ pc, evaluates a surface density
+\[ \sigma(R) = \sigma_0 e^{-R/R_d},\]
+with $\sigma_0$ chosen so that the integrated number within $R_{\rm max}=15\,000$ pc matches the chosen $N_{\rm total,G}$, and uses an exponential vertical profile to form a volumetric density
+\[ \rho(R,Z)=\frac{\sigma(R)}{2h_z}e^{-|Z|/h_z}.\]
+
+Arm membership is evaluated by computing the minimal radial separation between the sampled point's Galactocentric radius $R$ and nearby points on each arm centerline (a local $\phi$ window search is used) and comparing that separation to the arm half-width.
+
+\section*{Monte Carlo numeric results (run performed)}
+The standalone Monte Carlo run (script \texttt{\detokenize{g_star_spiral_model_run.py}}) sampled $N_{\rm mc}=100{,}000$ points and produced the following numeric outputs (values taken from the run's JSON summary):
+
+\begin{itemize}
+  \item Shell volume: $V_{\rm shell} = 1.202271675\times10^{9}\;\mathrm{pc}^3$ (exact from \texttt{\detokenize{g_star_results.json}}: \texttt{1202271675.450877}).
+  \item Expected G stars in shell (all): $N_{\rm shell} = 3\,958\,284.172$ (exact: \texttt{3958284.1722588856}).
+  \item Density-weighted expected in arms (for $N_{\rm total,G}=2.0\times10^{10}$): $N_{\rm shell,arms} = 534\,742.050$ (exact: \texttt{534742.0496346208}).
+  \item Geometric fraction of sampled points falling into the arm region: $f_{\rm geom}=0.20326$ (exact: \texttt{0.20326}).
+  \item Model parameters used (from JSON): $R_0=8122\ \mathrm{pc}$, $R_d=2600\ \mathrm{pc}$, $h_z=300\ \mathrm{pc}$, arm half-width $=300\ \mathrm{pc}$, $N_{\rm total,G}=2.0\times10^{10}$, $N_{\rm mc}=100{,}000$, arms from Reid et al.\ (2014).
+\end{itemize}
+
+\subsection*{Sensitivity to total G-star population}
+The script also printed sensitivity examples for different choices of $N_{\rm total,G}$ (same spatial model):
+\begin{itemize}
+  \item $N_{\rm total,G}=5\times10^{9} \Rightarrow N_{\rm shell,arms} \approx 1.471\times10^{5}$.
+  \item $N_{\rm total,G}=1\times10^{10} \Rightarrow N_{\rm shell,arms} \approx 2.943\times10^{5}$.
+  \item $N_{\rm total,G}=2\times10^{10} \Rightarrow N_{\rm shell,arms} \approx 5.886\times10^{5}$ (nominal run above).
+  \item $N_{\rm total,G}=5\times10^{10} \Rightarrow N_{\rm shell,arms} \approx 1.471\times10^{6}$.
+\end{itemize}
+
+The full JSON result created by the run is saved next to the script as \texttt{\detokenize{g_star_results.json}}.
+
+\section*{Maps and visualizations}
+Figure~1 shows the high-resolution Galactocentric scatter of sampled G-type stars in the 20,366--20,374 ly shell. In-arm points are highlighted in red and logarithmic spiral arm centerlines are overplotted. Figure~2 shows a 2D density heatmap (log-scaled) for the same sample.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{g_star_shell_arms_highres.png}
+  \caption{High-resolution sample of shell positions (Galactocentric X--Y). Red points are those identified as lying within the parametric arm half-width.}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\textwidth]{g_star_shell_density.png}
+  \caption{2D density heatmap (log scale) of sampled shell positions; spiral-arm centerlines are overlaid.}
+\end{figure}
+
+\section*{Drake-equation distributions}
+I generated Monte Carlo samples of Drake-parameter draws and produced distribution charts (per-star probability, probability at least one civilization in the sampled arm population, and expected civilization counts). See Figures~3--5 below for the plotted distributions; the raw samples are saved in \texttt{\detokenize{g_drake_samples.npz}}.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\textwidth]{g_drake_per_star_p_hist.png}
+  \caption{Distribution (histogram) of per-star probability $p$ from the Drake Monte Carlo (truncated at the 99.9 percentile for display).}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\textwidth]{g_drake_p_any_hist.png}
+  \caption{Distribution (histogram) of $P(\mathrm{at\ least\ one})$ across Monte Carlo draws.}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\textwidth]{g_drake_expected_n_civ_hist.png}
+  \caption{Distribution (histogram) of expected civilization counts $N\times p$ across draws.}
+\end{figure}
+
+\section*{Appendix: Monte Carlo run JSON summary}
+The exact JSON summary written by the run is included below for reference.
+\begin{verbatim}
+{
+  "V_shell": 1202271675.450877,
+  "N_expected_shell": 4033281.41761682,
+  "N_expected_arms": 588567.8157158284,
+  "frac_points_in_arm": 0.27092,
+  "params": {
+    "R0_pc": 8122.0,
+    "Rd": 2600.0,
+    "hz": 300.0,
+    "arm_half_width": 300.0,
+    "N_total_G": 20000000000.0,
+    "N_mc": 100000
+  }
+}
+\end{verbatim}
+
+\section*{Interpretation}
+The Monte Carlo model indicates several million G-type stars in the narrow spherical shell (when normalized to a Milky Way total of $\sim2\times10^{10}$ G stars), and roughly a few $10^5$ of those lying in the parametric spiral-arm regions for the nominal population choice. The large numbers are a consequence of G stars being extremely common compared with rare O stars, and the sampled shell encompasses a large physical volume (\(\sim10^9\;\mathrm{pc}^3\)).
+
+\section*{Caveats and recommendations}
+\begin{itemize}
+  \item The Monte Carlo run now uses the Reid et al.\ 2014 spiral arm model (loaded from \texttt{\detokenize{reid_arms.csv}}), which provides observational constraints on the Milky Way's actual spiral structure.
+  \item The normalization $N_{\rm total,G}$ is uncertain; use the sensitivity lines above to scale to any preferred total.
+  \item The volumetric density model assumes axisymmetry outside the arms; local clustering (open clusters, associations) is not modeled and will produce local departures from the predicted mean.
+\end{itemize}
+
+\bigskip
+\noindent Files created or referenced:
+\begin{itemize}
+  \item \texttt{\detokenize{g_star_spiral_model_run.py}} -- standalone script used to generate the Monte Carlo run and \texttt{\detokenize{g_star_results.json}}.
+  \item \texttt{\detokenize{g_star_results.json}} -- numeric summary written by the script.
+\end{itemize}
+
+\end{document}

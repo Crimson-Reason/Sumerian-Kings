@@ -1,0 +1,179 @@
+% O-star calculations and results
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\title{Estimate of O--type Stars in the 20,360--20,380 ly Shell (Spiral Arms)}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Summary}
+This note documents the analytic calculations used to estimate how many O--type stars are expected within the spherical shell centered on the Sun with inner radius $r_1=20\,360$ ly and outer radius $r_2=20\,380$ ly (light years), and specifically the expected number that lie in spiral arms.
+
+Two approaches are documented:
+\begin{enumerate}
+  \item Analytic, disk--averaged estimate using a thin exponential disk model and a global spiral--arm fraction.
+  \item A parametric Monte Carlo spiral--arm model implemented separately in the notebook \texttt{\detokenize{o_star_spiral_model.ipynb}} (file saved alongside this document). That notebook samples the shell volume and evaluates membership in simple logarithmic arms; run the notebook to get the model's Monte Carlo outputs.
+\end{enumerate}
+
+\section*{Assumptions and constants}
+\begin{itemize}
+  \item Distances: $1~\mathrm{ly}=0.306601~\mathrm{pc}$ (parsec).
+  \item Shell (Earth-centered): $r_1=20\,360~\mathrm{ly}$, $r_2=20\,380~\mathrm{ly}$.
+  \item Disk geometry (used for analytic density): effective disk radius $R=15\,000~\mathrm{pc}$ and effective vertical thickness $h=200~\mathrm{pc}$ (used as an approximate slab thickness for O star distribution).
+  \item Nominal total number of O stars in the Milky Way: $N_{\rm total}=30\,000$. A plausible literature range used here: $20{,}000$--$50{,}000$.
+  \item Fraction of O stars in spiral arms (used to convert total to arm population): $f_{\rm arms}=0.7$ (plausible range 0.5--0.9).
+\end{itemize}
+
+\section*{Analytic calculations}
+All numeric steps are shown; intermediate rounding is indicated.
+
+\subsection*{Convert radii to parsecs}
+\begin{align*}
+r_1 &= 20\,360~\mathrm{ly} \times 0.306601~\mathrm{pc/ly} = 6\,242.396~\mathrm{pc},\\
+r_2 &= 20\,380~\mathrm{ly} \times 0.306601~\mathrm{pc/ly} = 6\,248.528~\mathrm{pc},\\
+\Delta r &= r_2 - r_1 = 6.132~\mathrm{pc}.
+\end{align*}
+
+\subsection*{Approximate shell volume intersecting the thin disk}
+For a thin disk (thickness $h$) the shell volume intersecting the disk can be approximated by the cylindrical approximation
+\begin{equation*}
+V_{\rm shell,disk} \approx 2\pi r_{\rm avg} \Delta r \; h,
+\end{equation*}
+where $r_{\rm avg}=\tfrac{1}{2}(r_1+r_2)\approx 6\,245.462~\mathrm{pc}$. Using $h=200~\mathrm{pc}$:
+\begin{align*}
+V_{\rm shell,disk} &\approx 2\pi \times 6\,245.462~\mathrm{pc} \times 6.132~\mathrm{pc} \times 200~\mathrm{pc} \\
+&\approx 4.8126 \times 10^{7}\;\mathrm{pc}^3.
+\end{align*}
+
+\subsection*{Disk volume and mean O--star density}
+Treat the disk volume as a cylinder of radius $R=15\,000~\mathrm{pc}$ and height $h$:
+\begin{align*}
+V_{\rm disk} &= \pi R^2 h = \pi (15\,000)^2 \times 200 \\
+&\approx 1.4137 \times 10^{11}\;\mathrm{pc}^3.
+\end{align*}
+
+Mean O--star number density (per cubic parsec) for $N_{\rm total}=30{,}000$:
+\begin{equation*}
+\rho = \frac{N_{\rm total}}{V_{\rm disk}} = \frac{30{,}000}{1.4137\times10^{11}} \approx 2.12\times10^{-7}~\mathrm{pc}^{-3}.
+\end{equation*}
+For the lower/upper total counts considered:
+\begin{align*}
+N_{\rm total}=20{,}000 &\Rightarrow \rho \approx 1.41\times10^{-7}~\mathrm{pc}^{-3},\\
+N_{\rm total}=50{,}000 &\Rightarrow \rho \approx 3.54\times10^{-7}~\mathrm{pc}^{-3}.
+\end{align*}
+
+\subsection*{Expected O stars in the shell (disk intersection)}
+Multiply mean density by the disk-intersecting shell volume:
+\begin{align*}
+N_{\rm shell} &= \rho \; V_{\rm shell,disk} \\
+&\approx (2.12\times10^{-7})\times (4.8126\times10^{7}) \approx 10.2\quad({\rm nominal}).
+\end{align*}
+Similarly the low/high totals give $N_{\rm shell}\approx 6.8$ (for 20k) and $\approx 17.0$ (for 50k).
+
+\subsection*{Apply spiral--arm fraction}
+Assuming $f_{\rm arms}=0.7$ (nominal):
+\begin{equation*}
+N_{\rm shell,arms} = f_{\rm arms} \times N_{\rm shell} \approx 0.7 \times 10.2 \approx 7.1.
+\end{equation*}
+Using the low/high combinations of $N_{\rm total}$ and $f_{\rm arms}$ in the ranges described above gives a plausible range of roughly $\sim3$ to $\sim15$ O type stars in the shell that lie in spiral arms.
+
+\section*{Monte Carlo spiral--arm model (notebook)}
+A more realistic parametric model was implemented in the notebook file
+\texttt{o\_star\_spiral\_model.ipynb} saved alongside this TeX file. That notebook:
+\begin{itemize}
+  \item Samples points uniformly inside the spherical shell (given $r_1,r_2$).
+  \item Converts Sun-centered coordinates to Galactocentric cylindrical coordinates $(R,\phi,Z)$ using $R_0=8.122~\mathrm{kpc}=8122~\mathrm{pc}$.
+  \item Uses an exponential radial surface density $\sigma(R)=\sigma_0 e^{-R/R_d}$ normalized so the integrated number inside a radius $R_{\rm max}=15\,000$ pc equals $N_{\rm total}$.
+  \item Uses an exponential vertical profile (scale height $h_z$) to form a volumetric density $\rho(R,Z)=\sigma(R)/(2h_z)\,e^{-|Z|/h_z}$.
+  \item Evaluates proximity to simple logarithmic arm centerlines (given arm pitch and half-width) to tag points "in arms" and computes density-weighted expected counts.
+\end{itemize}
+
+To reproduce Monte Carlo results, open and run the notebook in Jupyter or VS Code. It requires only NumPy; no non-standard dependencies are needed.
+
+\subsection*{Monte Carlo results (fallback parametric 4-arm, N\_mc = 50{,}000)}
+The notebook was run with the fallback parametric 4-arm model (no \texttt{\detokenize{reid_arms.csv}} present), using \texttt{N\_mc = 50{,}000}. The numeric outputs were:
+\begin{itemize}
+  \item Shell volume: $V_{\rm shell} = 3.006\times10^{9}\;\mathrm{pc}^3$.
+  \item Mean volumetric density in shell: $\langle\rho\rangle = 5.413\times10^{-9}\;\mathrm{pc}^{-3}$.
+  \item Expected O stars in shell (all): $N_{\rm shell} \approx 16.27$.
+  \item Density-weighted expected in arms: $N_{\rm shell,arms} \approx 2.19$ (for $N_{\rm total}=30{,}000$).
+  \item Geometric fraction of sampled points inside arm region: $\approx 0.2686$.
+  \item Sensitivity sweep (expected in arms): $N_{\rm total}=20{,}000\rightarrow1.46$, $30{,}000\rightarrow2.19$, $50{,}000\rightarrow3.64$.
+\end{itemize}
+
+These values are density-weighted estimates from the Monte Carlo run; they account for the exponential radial and vertical density profiles used in the model.
+
+% The next subsection will be filled after a higher-sample run (N_mc=250k).
+\subsection*{Higher-sample Monte Carlo results with Reid et al. 2014 arm loci}
+A more realistic spiral-arm model was implemented using the published arm parameters from Reid et al.\ (2014), which provides a better constraint on the actual Milky Way spiral structure. The Reid arm model uses four main arms (Perseus, Local, Sagittarius, and Norma) each described by a logarithmic spiral with parameters derived from radio maser parallax observations. I re-ran the Monte Carlo with $\texttt{N\_mc = 250{,}000}$ and the Reid arms. The outputs were:
+\begin{itemize}
+  \item Shell volume: $V_{\rm shell} = 3.006\times10^{9}\;\mathrm{pc}^3$ (same geometric volume).
+  \item Mean volumetric density in shell: $\langle\rho\rangle = 5.103\times10^{-9}\;\mathrm{pc}^{-3}$.
+  \item Expected O stars in shell (all): $N_{\rm shell} \approx 15.34$.
+  \item Density-weighted expected in arms: $N_{\rm shell,arms} \approx 2.12$ (for $N_{\rm total}=30{,}000$).
+  \item Geometric fraction of sampled points inside arm region: $\approx 0.2016$.
+  \item Sensitivity sweep (expected in arms): $N_{\rm total}=20{,}000\rightarrow1.42$, $30{,}000\rightarrow2.12$, $50{,}000\rightarrow3.54$.
+\end{itemize}
+
+The Reid-based results are very consistent with the earlier parametric-arm results (expected $\sim$2.10--2.12 O stars in arms), confirming that the spiral structure modeled parametrically aligns well with the observational constraints from Reid et al.\ (2014).
+
+
+\section*{Final numeric statement (analytic result)}
+Using the relatively simple disk-average analytic method above, the best single-value estimate is:
+\begin{center}
+\textbf{Approximately $7$ O--type stars in the 20,360--20,380 ly shell and located in spiral arms.}
+\end{center}
+Plausible range given parameter uncertainty: roughly $3$--$15$.
+
+\section*{Caveats and recommendations}
+\begin{itemize}
+  \item The analytic approach assumes O--stars are smoothly distributed according to global averages; in reality O stars are clustered in OB associations and localized arm segments, so local counts may differ substantially.
+  \item The spiral-arm Monte Carlo notebook gives a more spatially resolved (though still parametric) estimate; run it to get a complementary estimate and sensitivity to arm width, $N_{\rm total}$, and $h_z$.
+  \item For a highest fidelity result, one should use a published spiral-arm locus (e.g., Reid et al. 2014) and an observational O--star catalog (e.g., Gaia-based OB catalogs) to count directly.
+\end{itemize}
+
+\bigskip
+\noindent Files created or referenced:
+\begin{itemize}
+  \item \texttt{\detokenize{o_star_spiral_model.ipynb}} -- Monte Carlo model (saved in same folder).
+  \item \texttt{\detokenize{o_star_calculations.tex}} -- this document.
+\end{itemize}
+
+\section*{Drake-style Estimates for the Two O-type Stars}
+We computed Drake-style scenario probabilities for the estimated two O-type stars in the 20,360--20,380 ly shell. The simplified per-star probability model used is
+\[ p = f_p \times n_e \times f_l \times f_i \times f_c \times \frac{L}{t_{\star}}, \]
+where $t_{\star}$ is the stellar lifetime (here taken as $5\times10^{6}$ yr for O stars), and $L$ is the civilization lifetime. The probability that at least one of the $n$ stars hosts an advanced society is $1-(1-p)^n$.
+
+Three illustrative scenarios were evaluated (parameters listed below); $n=2$ was used.
+
+\begin{itemize}
+  \item \textbf{Optimistic:}
+    \begin{itemize}
+      \item $f_p=1.0, n_e=0.20, f_l=1.0, f_i=0.10, f_c=0.50, L=10^{6}$ yr.
+      \item Per-star $p \approx 2.00\times10^{-3}$.
+      \item $P(\mathrm{at\ least\ one\ of\ 2}) \approx 3.996\times10^{-3}$ (\;0.40\%).
+    \end{itemize}
+
+  \item \textbf{Moderate:}
+    \begin{itemize}
+      \item $f_p=1.0, n_e=0.10, f_l=0.10, f_i=0.01, f_c=0.10, L=10^{5}$ yr.
+      \item Per-star $p \approx 2.00\times10^{-7}$.
+      \item $P(\mathrm{at\ least\ one\ of\ 2}) \approx 4.00\times10^{-7}$ (\;0.00004\%).
+    \end{itemize}
+
+  \item \textbf{Pessimistic:}
+    \begin{itemize}
+      \item $f_p=0.5, n_e=0.01, f_l=10^{-6}, f_i=10^{-6}, f_c=0.1, L=10^{4}$ yr.
+      \item Per-star $p \approx 1.00\times10^{-18}$.
+      \item $P(\mathrm{at\ least\ one\ of\ 2}) \approx 2.00\times10^{-18}$ (effectively zero).
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Interpretation.} Even under extremely generous assumptions, the probability that one of these two O stars currently hosts an advanced technological society is very small (optimistic upper bound ~0.4\%). The short lifetimes of O stars (millions of years) make the emergence and long-term persistence of civilizations around them highly unlikely in most realistic scenarios.
+
+\end{document}
+
