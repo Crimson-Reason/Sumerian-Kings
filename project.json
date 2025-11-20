@@ -1,0 +1,121 @@
+{
+  "name": "Sumerian-Kings",
+  "version": "1.0.0",
+  "description": "Monte Carlo analysis of star populations and Drake equation probabilities for Sumerian Kings research",
+  "author": "fzmwml",
+  "repository": "https://github.com/Crimson-Reason/Sumerian-Kings.git",
+  "projectStructure": {
+    "analysis": {
+      "description": "Core analysis scripts and models",
+      "files": [
+        "g_star_spiral_model_1M.py",
+        "o_star_spiral_model_1M.py",
+        "g_drake_estimate.py",
+        "drake_sweep.py",
+        "create_reid_arms.py",
+        "mc_convergence_analysis.py"
+      ]
+    },
+    "notebooks": {
+      "description": "Jupyter notebooks for interactive analysis",
+      "files": [
+        "g_star_spiral_model.ipynb",
+        "o_star_spiral_model.ipynb",
+        "g_drake_sweep.ipynb",
+        "g_drake_estimate.ipynb",
+        "sumerian-kings-monte-carlo-model.ipynb"
+      ]
+    },
+    "data": {
+      "description": "Input data and results",
+      "files": [
+        "List-Sumerian-Kings.csv",
+        "sumerian-kings-reign.csv",
+        "reid_arms.csv",
+        "g_star_results.json",
+        "g_star_results_1M.json",
+        "o_star_results_1M.json",
+        "g_drake_results.json",
+        "g_shell_in_arm_positions.csv",
+        "g_shell_in_arm_positions_highres.csv"
+      ]
+    },
+    "results": {
+      "description": "Generated visualizations and reports",
+      "files": [
+        "g_star_calculations.pdf",
+        "o_star_calculations.pdf",
+        "g_drake_expected_n_civ_hist.png",
+        "g_drake_per_star_p_hist.png",
+        "g_drake_p_any_hist.png",
+        "g_drake_sweep_heatmap.png",
+        "g_star_shell_arms.png",
+        "g_star_shell_density.png",
+        "O-type-Starts-within-Travel-Time-of-Kish-Kings.png",
+        "Session_Summary_Analysis.docx"
+      ]
+    },
+    "distributions": {
+      "description": "Packaged archives for distribution",
+      "files": [
+        "star_analysis_results_FINAL.zip"
+      ]
+    }
+  },
+  "keyParameters": {
+    "shell_distance_ly": {
+      "G_star": "20,366-20,374 ly (8 ly width)",
+      "O_star": "20,360-20,380 ly (20 ly width)"
+    },
+    "galactic_parameters": {
+      "Sun_galactocentric_radius_pc": 8122,
+      "G_star_scale_length_pc": 2600,
+      "O_star_scale_length_pc": 2600,
+      "vertical_scale_height_pc": 300,
+      "spiral_arm_half_width_pc": 300
+    },
+    "drake_equation": {
+      "G_star_lifetime_years": "1e10 (10 Gyr)",
+      "O_star_lifetime_years": "5e6 (5 Myr)",
+      "fp_planets": 1.0,
+      "ne_habitable_planets": 0.1,
+      "f_l_range": [1e-6, 1.0],
+      "f_i_range": [1e-6, 1.0],
+      "f_c_range": [0.01, 1.0],
+      "L_civilization_lifetime_years": [100, 1e8]
+    },
+    "monte_carlo_samples": {
+      "baseline": 100000,
+      "high_precision": 1000000
+    }
+  },
+  "results_summary": {
+    "G_type_stars_shell": "~4.1 million",
+    "G_type_stars_in_arms": "~571,000",
+    "O_type_stars_shell": "~15.4",
+    "O_type_stars_in_arms": "~2.16",
+    "expected_civilizations_median": "2.23e-7",
+    "expected_civilizations_mean": 0.117,
+    "probability_at_least_one": "1.7% (mean)"
+  },
+  "requirements": {
+    "python_version": "3.11+",
+    "packages": [
+      "numpy",
+      "pandas",
+      "matplotlib",
+      "scipy",
+      "python-docx",
+      "jupyter"
+    ]
+  },
+  "scripts": {
+    "drake_sweep": "python g_drake_sweep_execute.py",
+    "g_star_analysis": "python g_star_spiral_model_1M.py",
+    "o_star_analysis": "python o_star_spiral_model_1M.py",
+    "convergence_test": "python mc_convergence_analysis.py",
+    "create_report": "python create_session_summary_docx.py"
+  },
+  "lastUpdated": "2025-11-20",
+  "status": "Complete - All primary tasks and visualizations finished"
+}

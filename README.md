@@ -1,14 +1,12 @@
-# Reproduce O-star Monte Carlo and TeX build
+# Sumerian-Kings: Star Analysis Project
 
-This folder contains:
-- `o_star_spiral_model.ipynb` — Monte Carlo notebook estimating O-type star counts in a spherical shell. Supports using a `reid_arms.csv` spiral-arm locus if present; otherwise falls back to a parametric 4-arm model.
-- `o_star_calculations.tex` — LaTeX write-up with analytic calculations and the Monte Carlo outputs.
-- `o_star_calculations.pdf` — Compiled PDF (if present).
+A comprehensive Monte Carlo analysis of stellar populations and Drake equation probabilities, exploring the potential for advanced civilizations in Earth-centered galactic shells.
 
-Requirements
-- Python 3.8+ with `numpy` installed for the notebook (the notebook uses only NumPy and Python standard library).
-- Jupyter or VS Code with Jupyter support to open and run the notebook interactively.
-- A LaTeX distribution (e.g., MiKTeX on Windows) to compile the `.tex` file to PDF.
+## Project Overview
+
+This project estimates the number of O-type and G-type stars within specific distance shells from Earth, applies the Drake equation to compute civilization detection probabilities, and integrates observational spiral arm data from Reid et al. (2014).
+
+**Key Finding:** Expected ~0.1 advanced civilizations in the analyzed shell, highlighting the Fermi Paradox.
 
 Quick steps (PowerShell)
 
