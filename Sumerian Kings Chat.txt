@@ -1,6 +1,4 @@
-fzmwml: This is a list of Kings of Kish and their reign.
-
-GitHub Copilot: Your code takes the reign lengths of the Kings of Kish and, using the concept of time dilation from special relativity, infers the "velocity" (as a fraction of the speed of light) that would make a king's experienced lifetime (`t0 = 40` years) match the legendary reign length.
+The model takes the reign lengths of the Kings of Kish and, using the concept of time dilation from special relativity, infers the "velocity" (as a fraction of the speed of light) that would make a king's experienced lifetime (`t0 = 40` years) match the legendary reign length.
 
 **How it works:**
 - For each king, it solves for velocity `v` in the time dilation formula:  
@@ -14,45 +12,44 @@ The plot shows, for each king, the hypothetical speed (as a fraction of light sp
 
 Let me know if you want to add features, explanations, or change the plot!
 
-fzmwml: "Jushur 			",  , 1200 ,
-"Kullassina-bel	 	",  , 960 ,
-"Nangishlishma 		",  , 670 ,
-"En-tarah-ana 		",  , 420 ,
-"Babum 				",  , 300 ,
-"Puannum 			",  , 840 ,
-"Kalibum 			",  , 960 ,
-"Kalumum 			",  , 840 ,
-"Zuqaqip 			",  , 900 ,
-"Atab (Aba) 		",  , 600 ,
-"Mashda 			",  , 840 ,
-"Arwium 			",  , 720 ,
-"Etana 				",  , 1500 ,
-"Balih 				",  , 400 ,
-"En-me-nuna 		",  , 660 ,
-"Melem-Kish 		",  , 900 ,
-"Barsal-nuna 		",  , 1200 ,
-"Zamug 				",  , 140 ,
-"Tizqar 			",  , 305 ,
-"Ilku 				",  , 900 ,
-"Iltasadum 			",  , 1200 ,
-"Enmebaragesi 		"   , 900 , 
-"Aga of Kish 		",  , 625 ,
-"Susuda 			",  , 201 ,
-"Dadasig 			",  , 81 ,
-"Mamagal 			",  , 360 ,
-"Kalbum 			",  , 195 ,
-"Tuge 				",  , 360 ,
-"Men-nuna 			",  , 180 ,
-"Enbi-Ištar 		",  , 290 ,
-"Lugalngu 			",  , 360 ,
-"Kug-Bau (female) 	",  , 100 , 
-"Puzur-Suen 		",  , 25 ,
-"Ur-Zababa 			",  , 400 ,
-"Zimudar 			",  , 30 ,
-"Usi-watar 			",  , 7 ,
-"Eshtar-muti 		",  , 11 ,
-"Ishme-Shamash 		",  , 11 ,
-"Nanniya 			",  , 7 , 
+kish_kings = [
+    # Antediluvian (mythical) kings
+    ("Jushur", 1200),
+    ("Kullassina-bel", 960),
+    ("Nangishlishma", 670),
+    ("En-tarah-ana", 420),
+    ("Babum", 300),
+    ("Puannum", 840),
+    ("Kalibum", 960),
+    ("Zuqaqip", 900),
+    ("Atab", 600),
+    ("Mashda", 840),
+    ("Arwium", 720),
+    ("Etana", 1560),
+    ("Balih", 400),
+    ("En-men-lu-ana", 1200),
+    ("Dumuzid, the Shepherd", 1000),
+    ("Ensipazi-anna", 700),
+    ("Enmengal-ana", 670),
+    ("Dumuzid, the Fisherman", 1000),
+
+    # Postdiluvian (legendary and early historical) kings
+    ("Jushur", 1200),
+    ("Kullassina-bel", 960),
+    ("Nangishlishma", 670),
+    ("En-tarah-ana", 420),
+    ("Babum", 300),
+    ("Puannum", 840),
+    ("Kalibum", 960),
+    ("Zuqaqip", 900),
+    ("Atab", 600),
+    ("Mashda", 840),
+    ("Arwium", 720),
+    ("Etana", 1560),
+    ("Balih", 400),
+    ("En-me-barage-si", 900),
+    ("Aga", 625)
+]
 
 GitHub Copilot: Your list matches the `king_names` and `reigns` arrays in your code. Each king's name is paired with their reign in years. The code then uses these to calculate the "inferred velocity" (as a fraction of the speed of light) that would make a king's experienced lifetime (`t0 = 40` years) match their legendary reign, using the time dilation formula from special relativity.
 
