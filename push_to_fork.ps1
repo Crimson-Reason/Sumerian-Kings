@@ -71,3 +71,4 @@ try {
 } catch {
     Write-Host "Could not determine remote URL; open GitHub and create a PR from your fork's branch to the upstream repo." -ForegroundColor Yellow
 }
+Write-Host "Done." -ForegroundColor Green
