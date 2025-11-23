@@ -1,4 +1,5 @@
 % G-type star calculations and results
+%\documentclass[aip,reprint]{revtex4-2}
 \documentclass[11pt]{article}
 \usepackage{amsmath}
 \usepackage{siunitx}
@@ -6,7 +7,7 @@
 \usepackage{graphicx}
 \usepackage{xurl}
 \title{Estimate of G--type Stars in the 20,366--20,374 ly Shell (Spiral Arms)}
-\author{}
+\author{Babak Makkinejad\thanks{Email: \href{mailto:babak\_makkinejad@hotmail.com}{babak\_makkinejad@hotmail.com}}}
 \date{\today}
 
 \begin{document}
@@ -109,7 +110,42 @@ I generated Monte Carlo samples of Drake-parameter draws and produced distributi
   \includegraphics[width=0.6\textwidth]{g_drake_expected_n_civ_hist.png}
   \caption{Distribution (histogram) of expected civilization counts $N\times p$ across draws.}
 \end{figure}
+\section*{Discussion}
 
+The analytic thin-disk estimate provides a global baseline, while the Monte 
+Carlo spiral-arm model introduces local overdensities. These values are 
+consistent with expectations for stellar density at the Solar radius and 
+typical spiral‐arm contrasts.
+
+\bibliographystyle{aipnum4-2}
+\begin{thebibliography}{99}
+
+\bibitem{Reid2014}
+M.~J. Reid \textit{et al.},
+Astrophys.\ J.\ \textbf{783}, 130 (2014).
+
+\bibitem{Gravity2018}
+GRAVITY Collaboration,
+Astron.\ Astrophys.\ \textbf{615}, L15 (2018).
+
+\bibitem{Juric2008}
+M. Jurić \textit{et al.},
+Astrophys.\ J.\ \textbf{673}, 864 (2008).
+
+\bibitem{BlandHawthorn2016}
+J. Bland-Hawthorn and O. Gerhard,
+Annu.\ Rev.\ Astron.\ Astrophys.\ \textbf{54}, 529 (2016).
+
+\bibitem{LicquiaNewman2015}
+T. Licquia and J. Newman,
+Astrophys.\ J.\ \textbf{806}, 96 (2015).
+
+\bibitem{Chabrier2003}
+G. Chabrier,
+Publ.\ Astron.\ Soc.\ Pac.\ \textbf{115}, 763 (2003).
+
+\end{thebibliography}
+\clearpage
 \section*{Appendix: Monte Carlo run JSON summary}
 The exact JSON summary written by the run is included below for reference.
 \begin{verbatim}
@@ -139,11 +175,15 @@ The Monte Carlo model indicates several million G-type stars in the narrow spher
   \item The volumetric density model assumes axisymmetry outside the arms; local clustering (open clusters, associations) is not modeled and will produce local departures from the predicted mean.
 \end{itemize}
 
+
 \bigskip
 \noindent Files created or referenced:
 \begin{itemize}
   \item \texttt{\detokenize{g_star_spiral_model_run.py}} -- standalone script used to generate the Monte Carlo run and \texttt{\detokenize{g_star_results.json}}.
   \item \texttt{\detokenize{g_star_results.json}} -- numeric summary written by the script.
 \end{itemize}
+
+
+
 
 \end{document}
