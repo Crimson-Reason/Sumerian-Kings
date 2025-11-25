@@ -1,0 +1,8 @@
+{
+  "N_mc": 250000,
+  "N_in_arm": 82668,
+  "frac_in_arm": 0.330672,
+  "out_csv": "g_shell_in_arm_positions_highres.csv",
+  "out_png": "g_star_shell_arms_highres.png",
+  "out_png2": "g_star_shell_density.png"
+}
