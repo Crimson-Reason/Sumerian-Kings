@@ -1,14 +1,13 @@
 {
   "V_shell": 1952712296.846516,
-  "N_expected_shell": 6962765.075485838,
-  "N_expected_arms": 1297750.6655410496,
-  "frac_points_in_arm": 0.14224,
+  "N_expected_shell": 6805638.4082459705,
+  "N_expected_arms": 1604110.4929011413,
+  "frac_points_in_arm": 0.252085,
   "params": {
     "R0_pc": 8122.0,
     "Rd": 2600.0,
     "hz": 300.0,
     "arm_half_width": 300.0,
-    "N_total_G": 20000000000.0,
-    "N_mc": 100000
+    "N_total_G": 20000000000.0
   }
 }

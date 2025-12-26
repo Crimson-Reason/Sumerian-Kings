@@ -1,0 +1,77 @@
+{
+  "table_rows": [
+    {
+      "L": 1000,
+      "area_fraction_target": 0.001,
+      "threshold_p_any": 0.0011249772130277,
+      "observed_area_fraction": 0.001875
+    },
+    {
+      "L": 1000,
+      "area_fraction_target": 0.01,
+      "threshold_p_any": 0.0002728627503501,
+      "observed_area_fraction": 0.013125
+    },
+    {
+      "L": 1000,
+      "area_fraction_target": 0.1,
+      "threshold_p_any": 3.889097398679375e-06,
+      "observed_area_fraction": 0.106875
+    },
+    {
+      "L": 1000,
+      "area_fraction_target": 0.5,
+      "threshold_p_any": 1.6041105110886631e-09,
+      "observed_area_fraction": 0.5125
+    },
+    {
+      "L": 1000000,
+      "area_fraction_target": 0.001,
+      "threshold_p_any": 0.6755457923386355,
+      "observed_area_fraction": 0.001875
+    },
+    {
+      "L": 1000000,
+      "area_fraction_target": 0.01,
+      "threshold_p_any": 0.2388311048843997,
+      "observed_area_fraction": 0.010625
+    },
+    {
+      "L": 1000000,
+      "area_fraction_target": 0.1,
+      "threshold_p_any": 0.0038815521915882,
+      "observed_area_fraction": 0.106875
+    },
+    {
+      "L": 1000000,
+      "area_fraction_target": 0.5,
+      "threshold_p_any": 1.6041092063545648e-06,
+      "observed_area_fraction": 0.5125
+    },
+    {
+      "L": 100000000,
+      "area_fraction_target": 0.001,
+      "threshold_p_any": 1.0,
+      "observed_area_fraction": 0.009375
+    },
+    {
+      "L": 100000000,
+      "area_fraction_target": 0.01,
+      "threshold_p_any": 0.999999999998594,
+      "observed_area_fraction": 0.013125
+    },
+    {
+      "L": 100000000,
+      "area_fraction_target": 0.1,
+      "threshold_p_any": 0.3222050993819791,
+      "observed_area_fraction": 0.105625
+    },
+    {
+      "L": 100000000,
+      "area_fraction_target": 0.5,
+      "threshold_p_any": 0.0001603981841337,
+      "observed_area_fraction": 0.5125
+    }
+  ],
+  "generated_by": "g_drake_estimate.ipynb"
+}
