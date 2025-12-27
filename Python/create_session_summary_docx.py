@@ -384,7 +384,10 @@ def main():
     )
 
     # Save document
-    output_file = 'Session_Summary_Analysis.docx'
+    from pathlib import Path
+    PROJECT_ROOT = Path.cwd().parent
+    documentation_dir = PROJECT_ROOT / 'Documentation'
+    output_file = documentation_dir / 'Session_Summary_Analysis.docx'
     doc.save(output_file)
     print(f"Word document created successfully: {output_file}")
     return output_file
