@@ -385,9 +385,11 @@ def main():
 
     # Save document
     from pathlib import Path
-    PROJECT_ROOT = Path.cwd().parent
+    from datetime import date
+    PROJECT_ROOT = Path(__file__).resolve().parent.parent
     documentation_dir = PROJECT_ROOT / 'Documentation'
-    output_file = documentation_dir / 'Session_Summary_Analysis.docx'
+    date_str = date.today().strftime("%Y%m%d")
+    output_file = documentation_dir / f"Session_Summary_Analysis_{date_str}.docx"
     doc.save(output_file)
     print(f"Word document created successfully: {output_file}")
     return output_file
