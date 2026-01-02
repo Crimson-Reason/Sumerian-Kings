@@ -20,7 +20,7 @@ A Monte Carlo analysis combining stellar population estimates and Drake-equation
 ## Project summary
 
 This repository contains notebooks and utilities to:
-- Estimate O- and G-type star counts in distance shells around the Sun
+- Estimate G-type star counts in distance shells around the Sun
 - Model civilization detection probabilities using Drake-like parameters
 - Incorporate spiral-arm geometry from published loci (e.g., Reid et al. 2014)
 
@@ -65,7 +65,6 @@ jupyter notebook
 ```
 
 Recommended notebooks to start with:
-- `Jupyter/o_star_spiral_model.ipynb` — O-star shell model and spiral-arm integration
 - `Jupyter/g_star_spiral_model.ipynb` — G-star analysis
 - `Jupyter/sumerian-kings-monte-carlo-model.ipynb` — Monte Carlo & sensitivity runs
 
